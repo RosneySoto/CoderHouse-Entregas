@@ -1,0 +1,20 @@
+[
+  {
+    title: 'Escudra',
+    price: 123.45,
+    thumbnail: 'Esto es una foto',
+    id: 1
+  },
+  {
+    title: 'Calculadorea',
+    price: 234.56,
+    thumbnail: 'Esto es una foto',
+    id: 2
+  },
+  {
+    title: 'Globo terraqueo',
+    price: 345.67,
+    thumbnail: 'Esto es una foto',
+    id: 3
+  }
+]

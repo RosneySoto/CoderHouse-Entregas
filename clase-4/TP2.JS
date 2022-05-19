@@ -9,11 +9,12 @@ class Contenedor{
     };
 
     async save(obejto){
-        obejto['id'] = this.id; //Agrego la propiedad al objeto
-        this.id++;
-        const contenido = JSON.parse(await fs.promises.readFile(this.nombreArchivo));
+        const contenido = JSON.parse(
+        await fs.promises.readFile(this.nombreArchivo));
+        obejto.id = contenido.length + 1;
         contenido.push(obejto);
         await fs.promises.writeFile(this.nombreArchivo, JSON.stringify(contenido));
+
     };
 
     async getAll(){
@@ -51,16 +52,12 @@ class Contenedor{
         try {
             const contenido = await fs.promises.readFile(this.nombreArchivo, 'utf-8');
             const conten = JSON.parse(contenido);
-            const producto = conten.map((i) => i.id == id);
-            const resultado = conten.indexOf(producto);
-            conten.splice(resultado, 1);
-            await fs.promises.writeFile(this.nombreArchivo, JSON.stringify(conten, null));
-            return 'Producto eliminado'
-
+            const producto = conten.filter((i) => i.id !== id);
+            await fs.promises.writeFile(this.nombreArchivo, JSON.stringify(producto));
         } catch (error) {
-            console.log('Hubo un error al eliminar el producto con ID ', id)
+            return('Hubo un error al eliminar el producto con ID ', id)
         }
-    } 
+    }  
 }
 
 const crearArhivo = (nombreArchivo, contenido) =>{
