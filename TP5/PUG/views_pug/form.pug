@@ -1,0 +1,9 @@
+extends index.pug
+
+block contenido
+    h1 Formularios de Productos
+    form(action="/productos" method="POST")
+        input(type="text" name="title") 
+        input(type="number" name="price")
+        input(type="text" name="thumbnail") 
+        input(type="submit" value="Guardar")

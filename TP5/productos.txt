@@ -1,1 +1,0 @@
-[{"id":1,"tile":"Pantalon Violeta","price":500,"thumbnail":""},{"tile":"Pantalon Marron","price":350,"thumbnail":"","id":3}]

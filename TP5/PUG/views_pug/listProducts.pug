@@ -1,0 +1,23 @@
+extends index.pug
+
+block contenido
+
+    h1 Lista de Productos 
+
+    if items[0]
+        table
+            thead
+                th id
+                th Title
+                th Price
+                th Thumbnail
+            tbody
+                each prod in items
+                    tr
+                        td= prod.id
+                        td= prod.title
+                        td= '$' + prod.price
+                        td 
+                            img(style="width: 30px; height:30px" src=prod.thumbnail)
+    else 
+        h2 Producto cargado
