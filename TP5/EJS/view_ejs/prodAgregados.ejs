@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personas</title>
+</head>
+
+<body>
+
+    <h1>Productos agregados</h1>
+
+    <% if (items.length > 0) { %>
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Thumbnail</th>
+        </thead>
+        <tbody>
+            <% items.forEach(prod=>{ %>
+            <tr>
+                <td><%= prod.id %></td>
+                <td><%= prod.title %></td>
+                <td>$ <%= prod.price %></td>
+                <td><img style="width: 30px; height:30px" src=<%= prod.thumbnail %> alt=""></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <% } else { %>
+    <p>No hay productos agregados</p>
+    <% } %>
+    <a href="http://localhost:8080/">Cargar productos</a>
+
+</body>
+
+</html>

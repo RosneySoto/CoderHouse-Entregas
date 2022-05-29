@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personas</title>
+</head>
+
+<body>
+    <h1>Agregar productos</h1>
+    <form action="/productos" method="POST">
+        <label>Producto</label>
+        <input type="text" name="title"> <br>
+        <label>Precio</label>
+        <input type="number" name="price"> <br>
+        <label>Imagen</label>
+        <input type="text" name="thumbnail"> <br> <br>
+        <input type="submit" value="Cargar producto"><br><br>
+    </form>
+    <a href="http://localhost:8080/productos">Ver productos</a>
+</body>
+
+</html>
