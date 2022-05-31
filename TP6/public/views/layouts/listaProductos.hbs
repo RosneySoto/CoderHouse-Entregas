@@ -1,0 +1,28 @@
+<script src="/socket.io/socket.io.js"></script>
+<script src="../../js/main.js"></script>
+
+<div id="products"></div>
+
+<div>
+    <h1> Lista de Productos </h1>
+    <table class="">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Foto</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each result}}
+            <tr>
+            <td headers="id">{{id}}</td>
+            <td headers="name">{{title}}</td>
+            <td headers="price">{{price}}</td>
+            <td headers="thumbnail"><img src={{thumbnail}} width="50px" height="50px" alt={{url}}></td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>

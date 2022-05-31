@@ -1,0 +1,22 @@
+<script src="/socket.io/socket.io.js"></script>
+<script src="../../js/main.js"></script>
+
+<div id="products"></div>
+
+<form name="form" action="/productos" method="post" onsubmit="return enviarProducto()">
+    <div class="row"> 
+        <h1>Agregar un nuevo Producto</h1>
+
+        <label>Nombre</label>
+            <input name="title"  class="form-control" type="text" id="title" > <br>
+        <label>Precio</label>
+            <input name="price" class="form-control" type="number" id="price" > <br>
+        <label>Foto URL</label>
+            <input name="thumbnail" class="form-control" type="text" id="thumbnail"> <br>
+    </div> <br>
+
+    <div class="row">
+        <button type="submit" class="btn btn-large btn-primary">Guardar</button>
+        <button type="reset" class="btn btn-large btn-primary">Reset</button>
+    </div>
+</form>

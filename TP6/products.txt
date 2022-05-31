@@ -1,1 +1,1 @@
-[{"title":"Pantalon Negro","price":500,"thumnail":"","id":1},{"title":"Pantalon Negro","price":500,"thumnail":"","id":2}]
+[{"title":"111q","price":"1","thumbnail":"","id":1}]
