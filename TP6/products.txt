@@ -1,1 +1,1 @@
-[{"title":"Camisa","price":"10","thumbnail":"","id":1}]
+[{"title":"Cmaisa","price":"100","thumbnail":"","id":1},{"title":"Pantalon200","price":"","thumbnail":"","id":2}]
