@@ -1,22 +1,65 @@
-<script src="/socket.io/socket.io.js"></script>
+<!DOCTYPE html>
+<html lang="es">
+    <body>
 
-<div id="products"></div>
+        <div id="products"></div>
 
-<form name="form" action="/productos" method="post" onsubmit="return enviarProducto()">
-    <div class="row"> 
-        <h1>Agregar un nuevo Producto</h1>
+    <form name="form" action="/productos" method="post" onsubmit="return enviarProducto()">
+        <div class="row"> 
+            <h1>Agregar un nuevo Producto</h1>
 
-        <label>Nombre</label>
-            <input name="title"  class="form-control" type="text" id="title" > <br>
-        <label>Precio</label>
-            <input name="price" class="form-control" type="number" id="price" > <br>
-        <label>Foto URL</label>
-            <input name="thumbnail" class="form-control" type="text" id="thumbnail"> <br>
-    </div> <br>
+            <label>Nombre</label>
+                <input name="title"  class="form-control" type="text" id="title" > <br>
+            <label>Precio</label>
+                <input name="price" class="form-control" type="number" id="price" > <br>
+            <label>Foto URL</label>
+                <input name="thumbnail" class="form-control" type="text" id="thumbnail"> <br>
+        </div> <br>
 
-    <div class="row">
-        <button type="submit" class="btn btn-large btn-primary">Guardar</button>
-        <button type="reset" class="btn btn-large btn-primary">Reset</button>
+        <div class="row">
+            <button type="submit" class="btn btn-large btn-primary">Guardar</button>
+            <button type="reset" class="btn btn-large btn-primary">Reset</button>
+        </div>
+    </form>
+
+    <div id="products"></div>
+
+    <div>
+        <h1> Lista de Productos </h1>
+        <table class="products">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Foto</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each result}}
+                <tr>
+                <td headers="id">{{id}}</td>
+                <td headers="name">{{title}}</td>
+                <td headers="price">{{price}}</td>
+                <td headers="thumbnail"><img src={{thumbnail}} width="50px" height="50px" alt={{url}}></td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
     </div>
-</form>
-<script src="../../js/main.js"></script>
+
+    <hr>
+
+    <h1>Agregar un nuevo mensaje</h1>
+
+    <div id="messages"></div>
+    
+    <form onsubmit="return enviarMensaje()">
+      <input type="text" id="author"/>
+      <input type="text" id="text"/>
+      <button type="submit">Enviar mensaje</button>
+    </form>
+
+
+    </body>
+</html>

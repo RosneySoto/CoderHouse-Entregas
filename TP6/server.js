@@ -3,15 +3,15 @@ const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
 const router = require('./routes/routes');
 const { engine } = require('express-handlebars');
-const path = require('path');
+const { Server: HttpServer } = require('http');
+const { Server: SocketServer } = require('socket.io');
+const Container = require('./container');
 
-const products = [];
+// const products = [];
 const messages = [];
 
 const app = express();
-app.use(express.static('public'))
-const {Server: HttpServer} = require('http');
-const {Server: SocketServer} = require('socket.io');
+app.use(express.static('public'));
 
 app.engine(
     'hbs',
@@ -31,26 +31,32 @@ app.use(bodyParser.json());
 const httpServer = new HttpServer(app);
 const socketServer = new SocketServer(httpServer);
 
-socketServer.on('connection', (socket) =>{
-    console.log('Socket Conectado');
+socketServer.on('connection', async (socket) =>{
+    try {
+        console.log('Socket Conectado');
+        socket.emit('messages', messages);
+        socket.emit('products', products);
 
-    socket.emit('messages', messages);
-    socket.emit('products', products);
+        socket.on('new_product', async (product) =>{
+            Container.products.push(product) //products.push(product);
+            const listProducts = await Container.readFile('products.txt')
+            socketServer.sockets.emit('products', listProducts);
+        });
 
-    socket.on('new_product', (product) =>{
-        products.push(product);
-        socketServer.socket.emit('products', products);
-    });
-
-    socket.on('new_message', (message) =>{
-        messages.push(message);
-        socketServer.socket.emit('message', messages);
-    });
+        socket.on('new_message', async (message) =>{
+            messages.push(message);
+            const mensajestxt = await Container.readFileMessages();
+            socketServer.sockets.emit('messages', mensajestxt);
+        });
+    } catch (error) {
+        console.log('Error al conectar socket.io')
+    }
+    
 });
 
 app.use('/', router);
 
-app.listen(PORT, () =>{
+httpServer.listen(PORT, () =>{
     console.log(`El TP6 está conectado al Puerto ${PORT}`);
 });
 

@@ -9,6 +9,23 @@ class Container {
         return producto.id = ++Container.ID;
     };
 
+    static writeMessages = async (mensaje) =>{
+        try {
+            return await fs.promises.writeFile('messages.txt', JSON.stringify(mensaje));
+        } catch (error) {
+            console.log('[ERROR CONTAINER WRITEFILE MESSAGES]', error);
+        };
+    };
+
+    static readFileMessages = async () =>{
+        try {
+            const result = await fs.promises.readFile('messages.txt', 'utf-8');
+            return JSON.parse(result);
+        } catch (error) {
+            console.log('[ERROR CONTAINER READFILE MESSAGES]', error);
+        };
+    };
+
     static writeProducts = async (producto) =>{
         try {
             return await fs.promises.writeFile('products.txt', JSON.stringify(producto));

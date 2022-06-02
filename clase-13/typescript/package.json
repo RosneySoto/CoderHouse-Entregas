@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "typescript": "^4.7.2",
+    "build:ts": "./node_modules/.bin/tsc"
+  }
+}
