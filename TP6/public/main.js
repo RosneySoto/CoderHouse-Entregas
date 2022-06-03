@@ -14,13 +14,13 @@ const enviarProducto = () => {
 };
 
 const crearProducto = (product) =>{
-    const {title, price, thumbnail} = product;
+    const {id, title, price, thumbnail} = product;
     return `
         <tr>
-            <td headers="id">${id}</td>
+            <td headers="name">${id}</td>
             <td headers="name">${title}</td>
             <td headers="price">${price}</td>
-            <td headers="thumbnail">${thumbnail}width="50px" height="50px" alt={{url}}></td>
+            <td headers="thumbnail">${thumbnail}</td>
         </tr>
     `
 };
@@ -35,17 +35,17 @@ socket.on('products', (products)=>{
 });
 
 //MENSAJES
-const enviarMensaje = (e) => {
+const enviarMensaje = () => {
     const author = document.getElementById('author').value;
     const text = document.getElementById('text').value;
     const fyh = String(new Date().toDateString() + ' ' + new Date().toLocaleTimeString())
-    const mensaje = { author,text,fyh };
-    socket.emit('new_message',mensaje);
+    const mensaje = { author, text, fyh };
+    socket.emit('new_message', mensaje);
     return false;
 }
 
 const crearEtiquetasMensaje = (mensaje) => {
-    const { author,text,fyh } = mensaje;
+    const { author, text, fyh } = mensaje;
     return `
     <div>
         <strong style='color:blue'>${author}</strong>

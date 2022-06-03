@@ -7,26 +7,22 @@ const { Server: HttpServer } = require('http');
 const { Server: SocketServer } = require('socket.io');
 const Container = require('./container');
 
-// const products = [];
-const messages = [];
-
 const app = express();
-app.use(express.static('public'));
-
 app.engine(
     'hbs',
     engine({
       extname: '.hbs',
       defaultLayout: 'index.hbs',
       layoutsDir: __dirname + '/public/views/layouts',
-    //   partialsDir: __dirname + '/public/views/partials'
     })
 );
-app.set('views', './public/views/layouts');
-app.set('view engine', 'hbs');
 
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+app.set('views', './public/views/layouts');
+app.set('view engine', 'hbs');
 
 const httpServer = new HttpServer(app);
 const socketServer = new SocketServer(httpServer);
@@ -34,18 +30,21 @@ const socketServer = new SocketServer(httpServer);
 socketServer.on('connection', async (socket) =>{
     try {
         console.log('Socket Conectado');
-        socket.emit('messages', messages);
-        socket.emit('products', products);
+        socket.emit('messages', await Container.readFileMessages());
+        socket.emit('products', await Container.readFile());
 
+        ///// PRODUCTO /////
         socket.on('new_product', async (product) =>{
-            Container.products.push(product) //products.push(product);
+            Container.products.push(product);
             const listProducts = await Container.readFile('products.txt')
             socketServer.sockets.emit('products', listProducts);
         });
 
+        ///// MENSAJES /////
         socket.on('new_message', async (message) =>{
-            messages.push(message);
-            const mensajestxt = await Container.readFileMessages();
+            console.log(message);
+            Container.messages.push(message);
+            const mensajestxt = await Container.readFileMessages('messages.txt');
             socketServer.sockets.emit('messages', mensajestxt);
         });
     } catch (error) {
