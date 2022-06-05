@@ -48,9 +48,9 @@ const crearEtiquetasMensaje = (mensaje) => {
     const { author, text, fyh } = mensaje;
     return `
     <div>
+        <p style='color:brown'>${fyh}</p>
         <strong style='color:blue'>${author}</strong>
         <i style='color:green'>${text}</i>
-        <p style='color:brown'>${fyh}</p>
     </div>
     `;
 }

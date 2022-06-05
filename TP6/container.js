@@ -67,15 +67,25 @@ class Container {
     };
 
     async saveMessages(message){
+        // try {
+        //     const listMensajes = Container.messages;
+        //     listMensajes.push(message);
+        //     await Container.writeMessages(listMensajes);
+        //     const result = await Container.readFileMessages();
+        //     return result;
+        // } catch (error) {
+        //     console.log('[ERROR CONTAINER SAVE MESSAGES]')
+        // }
+
         let json = '';
-        let contenido = fs.readFileSync('./messages.txt','utf-8');
+        let contenido = fs.readFileSync('messages.txt','utf-8');
         if (contenido === '') {
             json = JSON.stringify([message]);
-            fs.writeFileSync('./messages.txt',json);
+            fs.writeFileSync('messages.txt',json);
         } else {
             let messages = JSON.parse(contenido);
             json = JSON.stringify([...messages,message]);
-            fs.writeFileSync('./messages.txt',json);
+            fs.writeFileSync('messages.txt',json);
         };
     };
 

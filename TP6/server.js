@@ -6,6 +6,9 @@ const { engine } = require('express-handlebars');
 const { Server: HttpServer } = require('http');
 const { Server: SocketServer } = require('socket.io');
 const Container = require('./container');
+const { messages } = require('./container');
+
+// const messages = [];
 
 const app = express();
 app.engine(
@@ -44,8 +47,15 @@ socketServer.on('connection', async (socket) =>{
         socket.on('new_message', async (message) =>{
             console.log(message);
             Container.messages.push(message);
-            const mensajestxt = await Container.readFileMessages('messages.txt');
-            socketServer.sockets.emit('messages', mensajestxt);
+            const listMessages = await Container.readFileMessages('messages.txt');
+            socketServer.sockets.emit('messages', messages);
+
+            // Container.messages.push(message);
+            // const mensajestxt = await Container.readFileMessages('messages.txt');
+            // socketServer.sockets.emit('messages', mensajestxt);
+
+            // Container.messages.push(message);
+            // socketServer.sockets.emit('messages', Container.messages);
         });
     } catch (error) {
         console.log('Error al conectar socket.io')

@@ -5,6 +5,7 @@ const Container = require('../container');
 // const httpServer = require('../server'); 
 
 const products = new Container('products.txt');
+const mensajes = new Container('messages.txt');
 
 router.get('/', async (req, res) =>{
     try {
@@ -28,7 +29,7 @@ router.post('/', async (req, res) =>{
 router.post('/', async (req, res) =>{
     try {
         const mensaje = req.body;
-        const result = await messages.saveMessages(mensaje);
+        const result = await mensajes.saveMessages(mensaje);
         res.redirect('/');
     } catch (error) {
         console.log('[ERROR EN EL POST]', error);
