@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+    <body>
+
+    <div class="formulario">
+        <form name="form" action="/" method="post" onsubmit="return enviarProducto()">
+            <h1>Agregar un nuevo Producto</h1>
+            
+            <div class="form_box"> 
+                <label>Nombre</label>
+                    <input name="title"  class="form-control" type="text" id="title" > <br>
+                <label>Precio</label>
+                    <input name="price" class="form-control" type="number" id="price" > <br>
+                <label>Foto URL</label>
+                    <input name="thumbnail" class="form-control" type="text" id="thumbnail"> <br>
+            </div> <br>
+
+            <div class="row">
+                <button type="submit" class="btn btn-large btn-primary">Guardar</button>
+                <button type="reset" class="btn btn-large btn-primary">Reset</button>
+            </div>
+        </form>
+    </div>    
+
+
+    <h1> Lista de Productos </h1>
+
+    <div>
+        <table class="">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Foto</th>
+            </tr>
+            </thead>
+
+            <tbody id="products">
+            </tbody>
+        
+        </table>
+    </div>
+
+    <hr>
+
+    <h1>Agregar un nuevo mensaje</h1>
+
+    <div>
+        <form action="/" method="post" onsubmit="return enviarMensaje()">
+            <input type="email" id="author"/>
+            <input type="text" id="text"/>
+
+            <input type="submit" value="Enviar Mensaje">
+            <button type="reset">Borrar</button>
+        </form>
+    </div>
+
+    <div id="messages"></div>
+
+    </body>
+</html>
