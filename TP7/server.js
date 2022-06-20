@@ -94,7 +94,7 @@ const save = async (producto) => {
             console.log('El producto ya existe');
         }
     })
-    existe ? console.log('No se pudo cargar el producto porque ya existe') : await knexMySQL('productos').insert([{ title: producto.title,thumbnail: producto.thumbnail,price: producto.price }])
+    existe ? console.log('No se pudo cargar el producto porque ya existe') : await knexMySQL('productos').insert([{ title: producto.title, price: producto.price, thumbnail: producto.thumbnail }])
 
     return producto;
 }
@@ -103,7 +103,7 @@ const save = async (producto) => {
 const getAll = async () => {
     let contenido = await knexMySQL.select('*').from('productos');
     if (contenido === '') {
-        console.log('No hay datos');
+        console.log('No hay productos agregados');
         let productos = '';
         return productos;
     } else {
@@ -132,9 +132,9 @@ router.get('/',async (req,res) => {
     res.render('formulario',{ productos });
 });
 
-router.post('/productos',async (req,res) => {
+router.post('/',async (req,res) => {
     let prod = req.body;
-    if (prod.title === '' || prod.price === '' || prod.thumbnail === '') {
+    if (prod.title === '' || prod.price === '') {
         res.status(400).send({ error: 'El producto no se pudo cargar, hay campos vacios' });
     } else {
         await save(req.body);
