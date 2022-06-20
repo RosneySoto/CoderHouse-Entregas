@@ -49,13 +49,6 @@ socketServer.on('connection', async (socket) =>{
             Container.messages.push(message);
             const listMessages = await Container.readFileMessages('messages.txt');
             socketServer.sockets.emit('messages', messages);
-
-            // Container.messages.push(message);
-            // const mensajestxt = await Container.readFileMessages('messages.txt');
-            // socketServer.sockets.emit('messages', mensajestxt);
-
-            // Container.messages.push(message);
-            // socketServer.sockets.emit('messages', Container.messages);
         });
     } catch (error) {
         console.log('Error al conectar socket.io')

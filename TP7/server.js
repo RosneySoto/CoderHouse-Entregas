@@ -1,7 +1,6 @@
 const express = require('express');
 const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
-// const router = require('./routes/routes');
 const { engine } = require('express-handlebars');
 const { Server: HttpServer } = require('http');
 const { Server: SocketServer } = require('socket.io');
@@ -11,9 +10,14 @@ const router = express.Router();
 
 //Conexion SQLite
 
+const op = {
+    filename: './DB/ecommerce.sqlite',
+    useNullAsDefault: true
+  };
+
 const knexSQLite = Knex({
     client: 'sqlite3',
-    connection: { filename: './DB/ecommerce.sqlite' },
+    connection: op,
     useNullAsDefault: true
 });
 
@@ -21,12 +25,12 @@ const knexSQLite = Knex({
 const options = {
     host: '127.0.0.1',
     user: 'root',
-    password: '',
+    password: '123456789',
     database: 'websocketapp'
 };
 
 const knexMySQL = Knex({
-    client: 'mysql',
+    client: 'mysql2',
     connection: options
 });
 
@@ -111,16 +115,13 @@ const getAll = async () => {
 
 // Websockets
 const saveMessage = async (message) => {
-    await knexSQLite('message').insert([{ author: message.autor,text: message.text,fyh: message.fyh }]);
+    await knexSQLite('message').insert([{ author: message.author, text: message.text, fyh: message.fyh }]);
 }
 
 const readMessage = async () => {
-    let contenido = await knexSQLite.select('*').from('message');
-    if (contenido === '') {
-        return '';
-    } else {
-        return contenido;
-    }
+    const contenido = await knexSQLite.select('*').from('message');
+    return contenido;
+
 }
 
 
