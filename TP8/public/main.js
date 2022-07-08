@@ -36,20 +36,24 @@ socket.on('products', (products)=>{
 
 //MENSAJES
 const enviarMensaje = () => {
-    const author = document.getElementById('author').value;
-    const text = document.getElementById('text').value;
+    const nombre = document.getElementById('nombre').value;
+    const apellido = document.getElementById('apellido').value;
+    const edad = document.getElementById('edad').value;
+    const alias = document.getElementById('alias').value;
+    const avatar = document.getElementById('avatar').value;
+    const text = document.getElementById('txt').value;
     const fyh = String(new Date().toDateString() + ' ' + new Date().toLocaleTimeString())
-    const mensaje = { author, text, fyh };
+    const mensaje = { nombre, apellido, edad, alias, avatar, fyh, text };
     socket.emit('new_message', mensaje);
     return false;
 }
 
 const crearEtiquetasMensaje = (mensaje) => {
-    const { author, text, fyh } = mensaje;
+    const { alias, text, fyh } = mensaje;
     return `
     <div>
         <p style='color:brown'>${fyh}</p>
-        <strong style='color:blue'>${author}</strong>
+        <strong style='color:blue'>${alias}</strong>
         <i style='color:green'>${text}</i>
     </div>
     `;
