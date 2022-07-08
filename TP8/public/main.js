@@ -49,12 +49,13 @@ const enviarMensaje = () => {
 }
 
 const crearEtiquetasMensaje = (mensaje) => {
-    const { alias, text, fyh } = mensaje;
+    const { alias, text, fyh, avatar } = mensaje;
     return `
     <div>
         <p style='color:brown'>${fyh}</p>
         <strong style='color:blue'>${alias}</strong>
         <i style='color:green'>${text}</i>
+        <i style='color:green'>${avatar}</i>
     </div>
     `;
 }

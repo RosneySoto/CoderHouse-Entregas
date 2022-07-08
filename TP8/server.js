@@ -114,6 +114,7 @@ const getAll = async () => {
 
 
 // Websockets
+
 //SQLITE
 // const saveMessage = async (message) => {
 //     await knexSQLite('message').insert([{ author: message.author, text: message.text, fyh: message.fyh }]);
@@ -125,53 +126,52 @@ const getAll = async () => {
 
 // }
 
-//MONGO//////
-const saveMessage = async (message) => {
-    await Model.insert({
-        author:{
-            nombre: message.nombre,
-            apellido: message.apellido,
-            edad: message.edad,
-            alias: message.alias,
-            avatar: message.avatar},
-        text: message.text})
-}
-
-const readMessage = async () => {
-    const contenido = await Model.find();
-    console.log(contenido)
-    return contenido;
-
-}
-
-const Model = require('./DB/modelMensajes');
 
 //Rutas
-// router.get('/',async (req,res) => {
-//     let productos = await getAll() === '' ? '' : await getAll();
-//     console.log(productos);
-//     res.render('formulario',{ productos });
-// });
+router.get('/',async (req,res) => {
+    let productos = await getAll() === '' ? '' : await getAll();
+    // console.log(productos);
+    res.render('formulario',{ productos });
+});
 
-// router.post('/',async (req,res) => {
-//     let prod = req.body;
-//     if (prod.title === '' || prod.price === '') {
-//         res.status(400).send({ error: 'El producto no se pudo cargar, hay campos vacios' });
-//     } else {
-//         await save(req.body);
-//         res.redirect('/');
-//     }
-// })
+router.post('/',async (req,res) => {
+    let prod = req.body;
+    if (prod.title === '' || prod.price === '') {
+        res.status(400).send({ error: 'El producto no se pudo cargar, hay campos vacios' });
+    } else {
+        await save(req.body);
+        res.redirect('/');
+    }
+})
 
 /// CONSIGNA 1, ENTREGA 9
 const fakerMocks = require('./fakerProducts');
 const db = require('./db')
 const storeMensaje = require('./storeMensaje.js');
 const { measureMemory } = require('vm');
-
+const Model = require('./DB/modelMensajes');
 
 db('mongodb+srv://admin:123456789*@cluster0.ioqsra5.mongodb.net/ecommerce')
 
+//MONGO//////
+const saveMessage = async (message) => {
+    let newMessage = Model(message)
+    return await newMessage.save()
+}
+
+const readMessage = async () => {
+    const contenido = await Model.find();
+    return contenido;
+
+};
+
+async function getMessages()  {
+    const ListaMensajes = Model.find();
+    return ListaMensajes;
+};
+
+
+/*CREA EN MEMORIA UNA LISTA DE PRODUCTOS*/
 router.get('/faker', (req, res) =>{
     const { param = 5} = req.query;
     const mocks = [];
@@ -181,8 +181,8 @@ router.get('/faker', (req, res) =>{
     res.send({mocks})
 });
 
-
 //CONSIGNA 2, ENTREGA 9
+/*CREA EN MEMORIA UNA LISTA DE MENSAJES */
 router.get('/fakerMensajes', (req, res) =>{
     const { param = 10} = req.query;
     const mocks = [];
@@ -192,7 +192,8 @@ router.get('/fakerMensajes', (req, res) =>{
     res.send({mocks})
 });
 
-router.get('/newMensaje', (req, res) =>{
+// GUARDA EN LA BASE DE DATOS UNA LISTA DE MENSAJES
+router.post('/newMensaje', (req, res) =>{
     const { param = 10} = req.query;
     const mocks = [];
     for (let i = 0; i < param; i++){
@@ -202,16 +203,7 @@ router.get('/newMensaje', (req, res) =>{
 });
 
 router.get('/', (req, res) =>{
-    const list = storeMensaje.getMessages()
-    res.render('formulario', {list})
-});
-
-router.post('/',async (req,res) => {
-    let mensaje = req.body;
-    if (mensaje.nombre === '' || mensaje.apellido === ''|| mensaje.edad ==='' || mensaje.alias ==='' || mensaje.text ==='') {
-        res.status(400).send({ error: 'Debe indicar sus datos, hay campos vacios' });
-    } else {
-        await save(req.body);
-        res.redirect('/');
-    }
+    // const list = storeMensaje.getMessages()
+    const list = getMessages()
+    res.render('formulario', list)
 });
