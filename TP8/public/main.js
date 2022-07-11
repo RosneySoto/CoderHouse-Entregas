@@ -41,21 +41,28 @@ const enviarMensaje = () => {
     const edad = document.getElementById('edad').value;
     const alias = document.getElementById('alias').value;
     const avatar = document.getElementById('avatar').value;
+    const email = document.getElementById('email').value;
     const text = document.getElementById('txt').value;
     const fyh = String(new Date().toDateString() + ' ' + new Date().toLocaleTimeString())
-    const mensaje = { nombre, apellido, edad, alias, avatar, fyh, text };
+    const mensaje = {
+        author:{
+            nombre, apellido, edad, alias, avatar, email
+        },
+        text,
+        fyh
+        };
     socket.emit('new_message', mensaje);
     return false;
 }
 
 const crearEtiquetasMensaje = (mensaje) => {
-    const { alias, text, fyh, avatar } = mensaje;
+    const { fyh, author, text } = mensaje;
     return `
     <div>
         <p style='color:brown'>${fyh}</p>
-        <strong style='color:blue'>${alias}</strong>
+        <strong style='color:blue'>${author.email}</strong>
         <i style='color:green'>${text}</i>
-        <i style='color:green'>${avatar}</i>
+        <i><img src="${author.avatar}" height="50rem"></i>
     </div>
     `;
 }

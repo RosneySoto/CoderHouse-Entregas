@@ -194,7 +194,7 @@ router.get('/fakerMensajes', (req, res) =>{
 
 // GUARDA EN LA BASE DE DATOS UNA LISTA DE MENSAJES
 router.post('/newMensaje', (req, res) =>{
-    const { param = 10} = req.query;
+    const { param = 1} = req.query;
     const mocks = [];
     for (let i = 0; i < param; i++){
         mocks.push(storeMensaje.addMensaje())
@@ -204,6 +204,6 @@ router.post('/newMensaje', (req, res) =>{
 
 router.get('/', (req, res) =>{
     // const list = storeMensaje.getMessages()
-    const list = getMessages()
+    const list = getMessages();
     res.render('formulario', list)
 });

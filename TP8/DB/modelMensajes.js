@@ -4,25 +4,31 @@ const Schema = mongoose.Schema;
 const MensajeColeccion = 'mensajes';
 
 const MensajeSchema = new mongoose.Schema({
-    nombre:{
-        type: String,
-        require: true
-    },
-    apellido:{
-        type: String,
-        require: true
-    },
-    edad:{
-        type: Number,
-        require: true
-    },
-    alias:{
-        type: String,
-        require: true
-    },
-    avatar:{
-        type: String,
-        require: true
+    author: {
+        nombre:{
+            type: String,
+            require: true
+        },
+        apellido:{
+            type: String,
+            require: true
+        },
+        edad:{
+            type: Number,
+            require: true
+        },
+        alias:{
+            type: String,
+            require: true
+        },
+        email:{
+            type: String,
+            require: true
+        },
+        avatar:{
+            type: String,
+            require: true
+        },
     },
     text: {
         type: String,
