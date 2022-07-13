@@ -1,4 +1,6 @@
 const { faker } = require('@faker-js/faker');
+const posts = require('./DB/modelMensajes');
+const norm = require('normalizr');
 
 const generarProductos = () =>{
     return {

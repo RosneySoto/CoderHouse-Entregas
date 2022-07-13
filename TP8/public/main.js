@@ -46,7 +46,7 @@ const enviarMensaje = () => {
     const fyh = String(new Date().toDateString() + ' ' + new Date().toLocaleTimeString())
     const mensaje = {
         author:{
-            nombre, apellido, edad, alias, avatar, email
+            nombre, apellido, edad, alias, avatar, email,
         },
         text,
         fyh
