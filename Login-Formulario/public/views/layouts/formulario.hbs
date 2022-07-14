@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+    <body>
+
+    <div class="formulario">
+        <form name="form" action="/" method="post" onsubmit="return enviarProducto()">
+            <h1>Agregar un nuevo Producto</h1>
+            
+            <div class="form_box"> 
+                <label>Producto</label>
+                    <input name="title"  class="form-control" type="text" id="title" > <br>
+                <label>Precio</label>
+                    <input name="price" class="form-control" type="number" id="price" > <br>
+                <label>Foto URL</label>
+                    <input name="thumbnail" class="form-control" type="text" id="thumbnail"> <br>
+            </div> <br>
+
+            <div class="row">
+                <button type="submit" class="btn btn-large btn-primary">Guardar</button>
+                <button type="reset" class="btn btn-large btn-primary">Reset</button>
+            </div>
+        </form>
+    </div>    
+
+
+    <h1> Lista de Productos </h1>
+
+    <div>
+        <table class="">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Foto</th>
+            </tr>
+            </thead>
+
+            <tbody id="products">
+            </tbody>
+        
+        </table>
+    </div>
+
+    <hr>
+
+    <h1>Lista de Mensajes</h1>
+
+    <div>
+        <form action="/" method="post" onsubmit="return enviarMensaje()">
+            <div class="form_box"> 
+                <label>nombre</label>
+                    <input name="nombre"  class="form-control" type="text" id="nombre" > <br>
+                <label>apellido</label>
+                    <input name="apellido" class="form-control" type="text" id="apellido" > <br>
+                <label>edad</label>
+                    <input name="edad" class="form-control" type="number" id="edad"> <br>
+                <label>email</label>
+                <input name="email" class="form-control" type="mail" id="email"> <br>
+                <label>alias</label>
+                    <input name="alias" class="form-control" type="text" id="alias"> <br>
+                <label>avatar</label>
+                    <input name="avatar" class="form-control" type="text" id="avatar"> <br>
+                <label>Escribe el mensaje!</label>
+                    <input name="mensaje" class="form-control" type="text" id="txt"> <br>
+            </div> <br>
+
+            <input type="submit" value="Enviar Mensaje">
+            <button type="reset">Borrar</button>
+        </form>
+    </div>
+
+    <div id="messages"></div>
+
+    </body>
+</html>
