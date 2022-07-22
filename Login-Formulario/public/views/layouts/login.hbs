@@ -7,10 +7,24 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="formulario" method="post">
-        <input type="text" id="userName" name="nombre" placeholder="Ingresa tu nombre de usuario">
-        <button type="submit" value="Iniciar sesion" id="iniciaSesion">Iniciar Sesion</button>
+    <form action="formulario" method="post">       
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control-plaintext" id="username" name="username">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="password">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3" id="iniciaSesion">Iniciar Sesion</button>
     </form>
+    <br>
+    <input id='goToSignIn' type='button' value='Registrarme' />
     
     <script src="../../login.js"
 </body>

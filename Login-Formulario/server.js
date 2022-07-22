@@ -15,6 +15,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')
 const { MongoClient } = require('mongodb');
+const passport = require('./passport');
 
 
 //Conexion SQLite
@@ -58,6 +59,9 @@ app.use(session({
     }
 }));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.engine(
     'hbs',
     engine({
@@ -66,8 +70,6 @@ app.engine(
       layoutsDir: __dirname + '/public/views/layouts',
     })
 );
-
-
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -180,9 +182,38 @@ const readMessage = async () => {
 
 };
 
-router.get('/', (req, res) => {
+/*
+
+router.get('/', (req, res, next) =>{
+    if(req.isAuthenticated()) return next()
+    res.redirect('login')
+}, (req, res) => {
+    res.render('formulario')
+})
+
+router.get('/login', (req, res) => {
     res.render('login')
 })
+
+router.get('/signin',async (req,res) => {
+    res.render('signin')
+})
+
+// router.post('/login',passport.authenticate('login',{ failureRedirect: '/',failureMessage: true }),passport.authenticate('autenticado',{ failureRedirect: '/',failureMessage: true }),async (req,res) => {
+//     res.redirect('/formulario/' + req.body.username)
+// })
+router.post('/login',passport.authenticate('autenticacion'), passport.authenticate('login'), (req, res) => {
+    res.send('Usuarui Logeado')
+})
+router.post('/registro',passport.authenticate('registracion'), (req, res) => {
+    console.log(req.isAuthenticated())
+    res.send('Usuario Registrado correctamente')
+})
+
+// router.post('/login', passport.authenticate('autenticacion', {
+//     successRedirect: "/",
+//     failureRedirect: "/login"
+// }));
 
 router.get('/mensajes', (req, res) =>{
     const list = storeMensaje.getMessages();
@@ -196,6 +227,35 @@ router.get('/logout', async (req, res) => {
     })
     res.render('logout')
 });
+
+*/
+
+router.get('/',async (req,res) => {
+    res.render('login')
+});
+
+router.post('/',passport.authenticate('login',{ failureRedirect: '/signIn',failureMessage: true }),passport.authenticate('autenticacion',{ failureRedirect: '/',failureMessage: true }),async (req,res) => {
+    console.log(req.body)
+    res.redirect('/formulario')
+})
+
+router.get('/logOut',async (req,res) => {
+    req.session.destroy((err) => {
+        console.log(err);
+        console.log('Hasta luego');
+    })
+    res.render('logOut')
+})
+
+router.get('/signIn',async (req,res) => {
+    res.render('signin')
+})
+
+router.post('/signIn',passport.authenticate('registracion',{ failureRedirect: '/',failureMessage: true }),async (req,res) => {
+    res.redirect('/formulario/' + req.body.username)
+})
+
+
 
 router.post('/formulario', async (req, res) => {
     let userName = req.body.nombre;
@@ -211,19 +271,6 @@ router.post('/formulario', async (req, res) => {
         socket.emit('usuario', userName);
         socket.emit('messages',await readMessage())
         socket.emit('products',await getAll())
-    
-        // socket.on('new_message',async (mensaje) => {
-        //     // console.log(mensaje);
-        //     saveMessage(mensaje);
-        //     let mensajes = await readMessage();
-        //     socketServer.sockets.emit('messages',mensajes);
-        // });
-    
-        // socket.on('new_products',async (product) => {
-        //     await save(product)
-        //     let productos = await getAll() === '' ? '' : await getAll();
-        //     socketServer.sockets.emit('products',productos);
-        // });
 
         socket.on('nuevo_usuario', async (user) => {
             let sesion = await conectionMongo.db('ecommerce').collection('session').find().toArray();
